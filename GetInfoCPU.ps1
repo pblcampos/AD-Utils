@@ -12,6 +12,7 @@ Param(
    )
 
   $ADComment = (Get-ADComputer $machine -Properties Description).Description
+  $SO = (Get-ADComputer $machine -Properties operatingsystem).OperatingSystem
   if (Test-NetConnection $machine -InformationLevel Quiet)
     {
       $direccionip = (Resolve-DnsName $machine).IPAddress
@@ -32,7 +33,7 @@ Param(
         elseif ($SPEED -lt 1000000000 -ge 100000000) {$interface = "FastEth"}
         elseif ($SPEED -lt 100000000 -ge 10000000) {$interface = "Ethernet"}
         else {$interface = "OTRA"}
-      $SO = (Get-WmiObject -ComputerName $machine -ClassName Win32_OperatingSystem).Version
+      #$SO = (Get-WmiObject -ComputerName $machine -ClassName Win32_OperatingSystem).Version
       $Logindate = [Management.ManagementDateTimeConverter]::ToDateTime((Get-WmiObject -ComputerName $machine Win32_OperatingSystem).LastBootUpTime)
       $Disco = (Get-WmiObject win32_logicalDisk -ComputerName $machine -Filter "DeviceID='C:'").Size
       $DiscoGb = [math]::Round($Disco.ToInt64($_)/1Gb,0)
@@ -68,7 +69,7 @@ Param(
   else
     {
       $Logindate = (Get-ADComputer $machine -Properties lastlogondate).LastLogonDate
-      $SO = (Get-ADComputer $machine -Properties operatingsystem).OperatingSystem
+      
 
       New-Object psobject -Property @{
       SystemName = $machine
