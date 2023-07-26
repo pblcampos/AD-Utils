@@ -9,7 +9,7 @@
  Nombre de la maquina en la reiniciar el servicio
 
  .EXAMPLE
- Clearspooler.ps1 ZOCHMGU0000
+ BorrarColaImpresion.ps1 HOSTNAME
  #>
 
 [CmdletBinding()]
